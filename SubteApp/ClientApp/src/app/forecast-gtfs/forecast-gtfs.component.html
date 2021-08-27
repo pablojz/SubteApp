@@ -1,0 +1,24 @@
+<h1 id="tableLabel">Estado del Subte</h1>
+
+<p>Proxima llegada por estacion</p>
+
+<p *ngIf="!entities"><em>Espere...</em></p>
+
+<div *ngFor="let entity of entities;let i = index">
+  <p>{{entity.linea.routeId}}</p>
+    <table>
+      <tr>
+        <th>Estacion</th>
+        <th>Llegada</th>
+        <th>Salida</th>
+        <th>Tiempo arribo</th>
+      </tr>
+      <tr *ngFor="let estacion of entity.linea.estaciones;let h = index;">
+        <td> {{estacion.stopName}}</td>
+        <td>{{estacion.arrival.time*1000 | date:'hh:mm:ss a'}}</td>
+        <td>{{estacion.departure.time*1000 | date:'hh:mm:ss a'}}</td>
+        <td *ngIf="h > 0">{{estacion.arrival.time*1000 - entity.linea.estaciones[h-1].departure.time*1000 | date:'hh:mm:ss a'}}</td>
+      </tr>
+    </table>
+</div>
+
